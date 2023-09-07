@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="payment_provider_form" model="ir.ui.view">
+        <field name="name">Ompay Provider Form</field>
+        <field name="model">payment.provider</field>
+        <field name="inherit_id" ref="payment.payment_provider_form" />
+        <field name="arch" type="xml">
+            <group name="provider_credentials" position='inside'>
+                <group attrs="{'invisible': [('code', '!=', 'ompay')]}">
+                    <field name="ompay_public_key" password="True"/>
+                    <field name="ompay_secret_key" password="True" />
+                    <field name="ompay_merchant_key" password="True" />
+
+                </group>
+            </group>
+        </field>
+    </record>
+    <record id="payment_transaction_form" model="ir.ui.view">
+        <field name="name">Ompay Transaction Form</field>
+        <field name="model">payment.transaction</field>
+        <field name="inherit_id" ref="payment.payment_transaction_form" />
+        <field name="arch" type="xml">
+            <xpath expr='//field[@name="provider_reference"]' position='after'>
+                <field name="ompay_invoice_id" attrs="{'invisible': [('provider_code', '!=', 'ompay')]}" />
+            </xpath>
+        </field>
+    </record>
+</odoo>
